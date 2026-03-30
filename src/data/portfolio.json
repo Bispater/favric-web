@@ -1,0 +1,112 @@
+{
+  "portfolio": [
+    {
+      "id": "showroom-botonera",
+      "title": "Showroom — Control de Pantallas LED",
+      "category": "hardware",
+      "shortDescription": "Botonera multiplataforma para cambio de contenido en pantallas LED de showroom vía UDP.",
+      "fullDescription": "Sistema completo de control remoto de displays LED para entornos de showroom. Incluye app Android (Flutter) para operadores en terreno y app de escritorio (Angular + Electron) para control centralizado. Comunicación en tiempo real vía protocolo UDP en puerto 5000, gestión de múltiples dispositivos con selección simultánea, y panel admin web con persistencia en localStorage. Soporta 14 colores y comandos personalizados por pantalla.",
+      "techStack": ["Flutter", "Angular", "Electron", "UDP Sockets", "Node.js"],
+      "media": {
+        "thumbnail": "/assets/projects/showroom-thumb.jpg",
+        "demoType": "video",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "arco-deteccion-presencia",
+      "title": "Arco Interactivo con Sensores y LED",
+      "category": "hardware",
+      "shortDescription": "Arco con detección de presencia humana que activa luces LED y sonido automáticamente.",
+      "fullDescription": "Sistema de detección de presencia basado en visión por computador (OpenCV + MediaPipe Pose Estimation). Detecta cuando una persona se ubica en una zona delimitada durante 2.5 segundos, activando un arco de luces LED y efectos de sonido vía comandos UDP. Incluye cooldown configurable de 30s, feedback visual en tiempo real con barra de progreso circular, y tracking de tobillos para precisión. Diseñado para experiencias interactivas en showroom y eventos retail.",
+      "techStack": ["Python", "OpenCV", "MediaPipe", "UDP", "Hardware LED"],
+      "media": {
+        "thumbnail": "/assets/projects/arco-thumb.jpg",
+        "demoType": "video",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "chicken-love-you-menu",
+      "title": "Chicken Love You — Menú Digital & IA",
+      "category": "web",
+      "shortDescription": "Display digital de carta para restaurant con generación de imágenes por IA.",
+      "fullDescription": "Sistema de cartelería digital para el restaurant Chicken Love You. Incluye una aplicación Angular que renderiza el menú completo (hamburguesas, acompañamientos, combos) sobre un canvas de 1399x540px optimizado para pantallas comerciales. Los elementos del menú se posicionan con coordenadas absolutas para calzar con el diseño gráfico de fondo. Complementado con un aplicativo de generación de imágenes con inteligencia artificial para crear contenido visual del menú automáticamente.",
+      "techStack": ["Angular", "TypeScript", "SCSS", "IA Generativa", "Firebase"],
+      "media": {
+        "thumbnail": "/assets/projects/chicken-thumb.jpg",
+        "demoType": "image",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "totem-tickets-eventos",
+      "title": "Tótem de Autoservicio — Tickets y Eventos",
+      "category": "hardware",
+      "shortDescription": "Kiosko interactivo con impresión térmica, verificación de RUT y gestión de eventos.",
+      "fullDescription": "Sistema de tótem de autoservicio desplegado como aplicación Electron de pantalla completa. Integra verificación de RUT chileno con validación de dígito verificador, impresión automática de tickets en impresoras térmicas mediante un plugin Python (servidor HTTP en puerto 8000), y gestión completa de eventos con servicios (desayuno, almuerzo, cena). El backend Django genera automáticamente tickets y usos por fecha/servicio/asistente mediante signals. Incluye panel de administración Angular separado con CRUD completo y documentación técnica.",
+      "techStack": ["Angular", "Electron", "Python", "Django", "Impresora Térmica"],
+      "media": {
+        "thumbnail": "/assets/projects/totem-thumb.jpg",
+        "demoType": "video",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "hydroscan-waterflow",
+      "title": "HydroScan — Lectura de Medidores de Agua",
+      "category": "mobile",
+      "shortDescription": "App Flutter con QR + cámara + OCR para lectura automatizada de medidores de agua.",
+      "fullDescription": "Aplicación móvil MVP construida con Clean Architecture en Flutter. Flujo completo: escaneo de código QR del medidor → captura con cámara (overlay circular de guía) → reconocimiento óptico de caracteres (Google ML Kit) → validación y envío. Usa Riverpod para gestión de estado, Material 3 con tema oscuro de alto contraste para uso en terreno, y soporte para lectura de medidores manuales y digitales. Complementada con panel de administración en Angular 19 para gestión centralizada de lecturas y reportes.",
+      "techStack": ["Flutter", "Riverpod", "Google ML Kit OCR", "Angular", "REST API"],
+      "media": {
+        "thumbnail": "/assets/projects/hydroscan-thumb.jpg",
+        "demoType": "video",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "catalogo-digital",
+      "title": "Catálogo Digital Interactivo",
+      "category": "web",
+      "shortDescription": "Plataforma web de catálogo con admin y display para pantallas comerciales.",
+      "fullDescription": "Sistema de catálogo digital con panel de administración para gestionar productos, categorías y precios. Incluye vista de display optimizada para pantallas comerciales y tótems, con actualización en tiempo real via Firebase. Diseñado para entornos retail donde los precios y productos cambian frecuentemente sin intervención técnica.",
+      "techStack": ["Angular", "Firebase", "TypeScript", "SCSS"],
+      "media": {
+        "thumbnail": "/assets/projects/catalogo-thumb.jpg",
+        "demoType": "iframe",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    }
+  ]
+}
