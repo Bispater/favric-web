@@ -8,6 +8,8 @@ import ShowroomDemo from "@/components/demos/ShowroomDemo";
 import RutVerificationDemo from "@/components/demos/RutVerificationDemo";
 import ChickenMenuDemo from "@/components/demos/ChickenMenuDemo";
 import HydroScanDemo from "@/components/demos/HydroScanDemo";
+import NpsSurveyDemo from "@/components/demos/NpsSurveyDemo";
+import DashboardDemo from "@/components/demos/DashboardDemo";
 
 // 🔑 Analogía Angular:
 // - useState = variables de clase con ngModel / change detection
@@ -34,6 +36,8 @@ const demosMap: Record<string, React.ComponentType> = {
   "totem-tickets-eventos": RutVerificationDemo,
   "chicken-love-you-menu": ChickenMenuDemo,
   "hydroscan-waterflow": HydroScanDemo,
+  "nps-survey": NpsSurveyDemo,
+  "catalogo-admin-dashboard": DashboardDemo,
 };
 
 export default function ShowroomPage() {

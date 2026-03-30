@@ -16,7 +16,7 @@ const services = [
     ),
     title: "Tótems y Kioscos",
     description:
-      "Kioscos interactivos con Electron, impresión térmica via Python, verificación de RUT y gestión de eventos con tickets automáticos.",
+      "Kioscos de autoservicio con pantalla táctil, impresión de tickets, verificación de identidad y gestión de eventos con registro automático de asistencia.",
   },
   {
     icon: (
@@ -24,9 +24,9 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
       </svg>
     ),
-    title: "Apps Móviles Flutter",
+    title: "Aplicaciones Android e iOS",
     description:
-      "Aplicaciones multiplataforma con Flutter: control de hardware vía UDP, lectura OCR con cámara, escáner QR y sincronización en tiempo real.",
+      "Apps nativas para Android e iOS: control remoto de dispositivos, lectura automática con cámara, escáner QR y sincronización en tiempo real.",
   },
   {
     icon: (
@@ -34,9 +34,9 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    title: "Visión por Computador & IoT",
+    title: "Sensores e Interactividad",
     description:
-      "Detección de presencia con OpenCV y MediaPipe, control de LEDs y sensores, comunicación UDP entre dispositivos en red local.",
+      "Detección inteligente de presencia, control de iluminación LED y efectos de sonido, comunicación entre dispositivos en tiempo real.",
   },
   {
     icon: (
@@ -46,7 +46,7 @@ const services = [
     ),
     title: "Plataformas Web & Cartelería",
     description:
-      "Catálogos digitales, menús interactivos con IA generativa, paneles admin en Angular y displays optimizados para pantallas comerciales.",
+      "Catálogos digitales, menús interactivos con IA generativa, paneles de administración y displays optimizados para pantallas comerciales.",
   },
 ];
 

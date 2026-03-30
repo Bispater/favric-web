@@ -1,0 +1,61 @@
+/* src/styles.scss */
+:root {
+  --kiosk-blue: #1400FF;
+  --kiosk-blue-hover: #0f00cc;
+  --kiosk-blue-dark: #0a0099;
+  --kiosk-blue-light: #e8e5ff;
+  --kiosk-orange: #FF6600;
+  --kiosk-orange-light: #ff8533;
+  --kiosk-white: #ffffff;
+  --kiosk-gray-50: #f8f9fa;
+  --kiosk-gray-100: #f0f4f8;
+  --kiosk-gray-200: #e2e8f0;
+  --kiosk-gray-400: #94a3b8;
+  --kiosk-gray-600: #636e72;
+  --kiosk-gray-900: #1e293b;
+  --kiosk-success: #10b981;
+  --kiosk-danger: #ef4444;
+  --kiosk-radius: 16px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Barlow",
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  height: 100%;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--kiosk-gray-100);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+body {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--kiosk-gray-200);
+  border-radius: 3px;
+}
+
+/* angular:styles/global:styles */
+/*# sourceMappingURL=styles.css.map */

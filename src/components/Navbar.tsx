@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/showroom", label: "Showroom" },
+  { href: "/games", label: "Games" },
   { href: "#servicios", label: "Servicios" },
   { href: "#contacto", label: "Contacto" },
 ];
@@ -25,9 +26,16 @@ export default function Navbar() {
     <nav className="glass fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          <span className="gradient-text">favric</span>
-          <span className="text-muted">.cl</span>
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
+          <img
+            src="/assets/brand/favric-logo.png"
+            alt="Favric"
+            className="h-8 w-8 rounded-full object-contain"
+          />
+          <span>
+            <span className="gradient-text">favric</span>
+            <span className="text-muted">.cl</span>
+          </span>
         </Link>
 
         {/* Desktop links */}

@@ -15,13 +15,13 @@ const testimonials = [
   },
   {
     quote:
-      "La app Flutter para lectura de medidores con OCR nos eliminó el ingreso manual. Ahora nuestros operadores escanean el QR y capturan la lectura en segundos.",
+      "La app para lectura de medidores nos eliminó el ingreso manual. Ahora nuestros operadores escanean el QR y capturan la lectura en segundos desde su celular.",
     author: "Cliente Utilities",
     role: "Jefe de Proyecto",
   },
   {
     quote:
-      "El showroom interactivo con detección de presencia y control de pantallas LED vía UDP le dio otra vida a nuestro espacio comercial. Los clientes quedan impresionados.",
+      "El showroom interactivo con detección de presencia y control de pantallas LED le dio otra vida a nuestro espacio comercial. Los clientes quedan impresionados.",
     author: "Cliente Retail & Showroom",
     role: "Director Comercial",
   },

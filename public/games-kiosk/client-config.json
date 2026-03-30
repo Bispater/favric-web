@@ -1,0 +1,41 @@
+﻿{
+  "client": {
+    "name": "favric",
+    "subtitle": "Zona de entretenimiento interactivo",
+    "logo": "assets/favric-logo.png",
+    "favicon": "favicon.ico"
+  },
+  "branding": {
+    "primaryColor": "#6d28d9",
+    "primaryHover": "#5b21b6",
+    "primaryDark": "#4c1d95",
+    "primaryLight": "#a78bfa",
+    "accentColor": "#06b6d4",
+    "accentLight": "#22d3ee",
+    "backgroundColor": "#0a0a0f",
+    "cardBackground": "#141420",
+    "textPrimary": "#f0f0f5",
+    "textMuted": "#9ca3af",
+    "borderColor": "#2a2a3a"
+  },
+  "kiosk": {
+    "exitPassword": "1234",
+    "inactivityTimeoutSeconds": 120,
+    "showBestScores": true
+  },
+  "games": {
+    "memory": { "enabled": true, "pairs": 8 },
+    "puzzle": { "enabled": true },
+    "reaction": { "enabled": true },
+    "simon": { "enabled": true, "colors": 9, "speedMs": 400 },
+    "whack": { "enabled": true, "durationSeconds": 30 },
+    "speedtap": { "enabled": true, "durationSeconds": 30 },
+    "balloonpop": { "enabled": true, "durationSeconds": 45 }
+  },
+  "records": {
+    "enabled": false,
+    "requireRut": false,
+    "requireName": true,
+    "maxEntriesPerGame": 10
+  }
+}

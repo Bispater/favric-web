@@ -37,12 +37,17 @@ function validateRutDV(rut: string): boolean {
   return dv === dvExpected;
 }
 
-// Hardcoded employees (from the real ticket system)
-const mockDB: Record<string, { nombre: string; rut: string; evento: string; servicio: string }> = {
-  "123456789": { nombre: "Juan Pérez García", rut: "12.345.678-9", evento: "Almuerzo Corporativo", servicio: "Almuerzo" },
-  "987654321": { nombre: "María González López", rut: "98.765.432-1", evento: "Cena Aniversario", servicio: "Cena" },
-  "111111111": { nombre: "Pedro Rodríguez", rut: "11.111.111-1", evento: "Colación Diaria", servicio: "Colación" },
+// Hardcoded employees (with valid Chilean RUT check digits)
+const mockDB: Record<string, { nombre: string; evento: string; servicio: string }> = {
+  "123456785": { nombre: "Juan Pérez García", evento: "Almuerzo Corporativo", servicio: "Almuerzo" },
+  "987654325": { nombre: "María González López", evento: "Cena Aniversario", servicio: "Cena" },
+  "111111111": { nombre: "Pedro Rodríguez", evento: "Colación Diaria", servicio: "Colación" },
+  "76543210K": { nombre: "Ana Muñoz Soto", evento: "Desayuno Ejecutivo", servicio: "Desayuno" },
 };
+
+const fallbackNames = ["Carlos Tapia", "Valentina Rojas", "Andrés Figueroa", "Catalina Soto", "Diego Morales"];
+const fallbackEvents = ["Almuerzo Corporativo", "Colación Diaria", "Cena de Gala", "Desayuno Ejecutivo"];
+const fallbackServices = ["Almuerzo", "Colación", "Cena", "Desayuno"];
 
 type ViewState = "input" | "loading" | "success" | "error" | "ticket";
 
@@ -50,7 +55,7 @@ export default function RutVerificationDemo() {
   const [rut, setRut] = useState("");
   const [view, setView] = useState<ViewState>("input");
   const [error, setError] = useState("");
-  const [employee, setEmployee] = useState<typeof mockDB[string] | null>(null);
+  const [employee, setEmployee] = useState<{ nombre: string; rut: string; evento: string; servicio: string } | null>(null);
 
   function addDigit(d: string) {
     if (rut.length >= 9) return;
@@ -76,16 +81,14 @@ export default function RutVerificationDemo() {
     }
     setView("loading");
     setTimeout(() => {
-      const found = mockDB[cleaned];
-      if (found) {
-        setEmployee(found);
-        setView("success");
-        setTimeout(() => setView("ticket"), 1200);
-      } else {
-        setError("RUT no encontrado en el sistema");
-        setView("error");
-        setTimeout(() => setView("input"), 2000);
-      }
+      const known = mockDB[cleaned.toUpperCase()];
+      const idx = parseInt(cleaned.slice(0, 2)) % fallbackNames.length;
+      const found = known
+        ? { nombre: known.nombre, rut: formatRut(cleaned), evento: known.evento, servicio: known.servicio }
+        : { nombre: fallbackNames[idx], rut: formatRut(cleaned), evento: fallbackEvents[idx % fallbackEvents.length], servicio: fallbackServices[idx % fallbackServices.length] };
+      setEmployee(found);
+      setView("success");
+      setTimeout(() => setView("ticket"), 1200);
     }, 800);
   }
 
@@ -158,7 +161,7 @@ export default function RutVerificationDemo() {
             </motion.button>
 
             <div className="text-[9px] text-zinc-500">
-              Prueba: 12345678-9 • 98765432-1 • 11111111-1
+              Prueba: 12.345.678-5 • 11.111.111-1 • cualquier RUT válido
             </div>
           </motion.div>
         )}

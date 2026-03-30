@@ -4,9 +4,9 @@
       "id": "showroom-botonera",
       "title": "Showroom — Control de Pantallas LED",
       "category": "hardware",
-      "shortDescription": "Botonera multiplataforma para cambio de contenido en pantallas LED de showroom vía UDP.",
-      "fullDescription": "Sistema completo de control remoto de displays LED para entornos de showroom. Incluye app Android (Flutter) para operadores en terreno y app de escritorio (Angular + Electron) para control centralizado. Comunicación en tiempo real vía protocolo UDP en puerto 5000, gestión de múltiples dispositivos con selección simultánea, y panel admin web con persistencia en localStorage. Soporta 14 colores y comandos personalizados por pantalla.",
-      "techStack": ["Flutter", "Angular", "Electron", "UDP Sockets", "Node.js"],
+      "shortDescription": "Control remoto de pantallas LED desde celular y escritorio, ideal para showrooms y puntos de venta.",
+      "fullDescription": "Sistema integral para gestionar pantallas LED en tiempo real. Desde una app móvil (Android/iOS) el operador en terreno cambia contenido al instante, mientras el equipo central supervisa todo desde una app de escritorio. Permite controlar múltiples pantallas simultáneamente, personalizar colores y comandos por dispositivo, y administrar todo desde un panel web intuitivo.",
+      "techStack": ["App Móvil", "App Escritorio", "Panel Web"],
       "media": {
         "thumbnail": "/assets/projects/showroom-thumb.jpg",
         "demoType": "video",
@@ -22,9 +22,9 @@
       "id": "arco-deteccion-presencia",
       "title": "Arco Interactivo con Sensores y LED",
       "category": "hardware",
-      "shortDescription": "Arco con detección de presencia humana que activa luces LED y sonido automáticamente.",
-      "fullDescription": "Sistema de detección de presencia basado en visión por computador (OpenCV + MediaPipe Pose Estimation). Detecta cuando una persona se ubica en una zona delimitada durante 2.5 segundos, activando un arco de luces LED y efectos de sonido vía comandos UDP. Incluye cooldown configurable de 30s, feedback visual en tiempo real con barra de progreso circular, y tracking de tobillos para precisión. Diseñado para experiencias interactivas en showroom y eventos retail.",
-      "techStack": ["Python", "OpenCV", "MediaPipe", "UDP", "Hardware LED"],
+      "shortDescription": "Arco interactivo que detecta personas y activa luces y sonido automáticamente.",
+      "fullDescription": "Experiencia interactiva para showrooms y eventos retail. Cuando una persona se posiciona frente al arco, el sistema la detecta automáticamente y activa una secuencia de luces LED y efectos de sonido envolventes. Diseñado para captar la atención del público, generar engagement y crear momentos memorables en puntos de venta y ferias comerciales.",
+      "techStack": ["Detección Inteligente", "Iluminación LED", "Audio Interactivo"],
       "media": {
         "thumbnail": "/assets/projects/arco-thumb.jpg",
         "demoType": "video",
@@ -40,9 +40,9 @@
       "id": "chicken-love-you-menu",
       "title": "Chicken Love You — Menú Digital & IA",
       "category": "web",
-      "shortDescription": "Display digital de carta para restaurant con generación de imágenes por IA.",
-      "fullDescription": "Sistema de cartelería digital para el restaurant Chicken Love You. Incluye una aplicación Angular que renderiza el menú completo (hamburguesas, acompañamientos, combos) sobre un canvas de 1399x540px optimizado para pantallas comerciales. Los elementos del menú se posicionan con coordenadas absolutas para calzar con el diseño gráfico de fondo. Complementado con un aplicativo de generación de imágenes con inteligencia artificial para crear contenido visual del menú automáticamente.",
-      "techStack": ["Angular", "TypeScript", "SCSS", "IA Generativa", "Firebase"],
+      "shortDescription": "Carta digital para restaurantes con generación de imágenes por inteligencia artificial.",
+      "fullDescription": "Solución de cartelería digital para restaurantes. El menú se muestra en pantallas comerciales con un diseño atractivo y profesional que se actualiza en tiempo real. Incluye una herramienta de inteligencia artificial que genera automáticamente las imágenes de los platos, ahorrando costos de fotografía profesional. El administrador gestiona productos, precios y combos desde un panel simple sin necesidad de conocimientos técnicos.",
+      "techStack": ["Pantalla Comercial", "IA Generativa", "Panel Admin"],
       "media": {
         "thumbnail": "/assets/projects/chicken-thumb.jpg",
         "demoType": "image",
@@ -58,9 +58,9 @@
       "id": "totem-tickets-eventos",
       "title": "Tótem de Autoservicio — Tickets y Eventos",
       "category": "hardware",
-      "shortDescription": "Kiosko interactivo con impresión térmica, verificación de RUT y gestión de eventos.",
-      "fullDescription": "Sistema de tótem de autoservicio desplegado como aplicación Electron de pantalla completa. Integra verificación de RUT chileno con validación de dígito verificador, impresión automática de tickets en impresoras térmicas mediante un plugin Python (servidor HTTP en puerto 8000), y gestión completa de eventos con servicios (desayuno, almuerzo, cena). El backend Django genera automáticamente tickets y usos por fecha/servicio/asistente mediante signals. Incluye panel de administración Angular separado con CRUD completo y documentación técnica.",
-      "techStack": ["Angular", "Electron", "Python", "Django", "Impresora Térmica"],
+      "shortDescription": "Tótem de autoservicio para registro de asistentes e impresión de tickets en eventos.",
+      "fullDescription": "Sistema de autoservicio para eventos corporativos y ferias. Los asistentes se identifican en el tótem, verifican sus datos y reciben un ticket impreso al instante. Gestiona múltiples servicios (desayuno, almuerzo, cena) con control automático de asistencia por horario. Incluye un panel de administración para configurar eventos, ver reportes en tiempo real y exportar datos de asistencia.",
+      "techStack": ["Tótem Táctil", "Impresión Automática", "Panel Admin"],
       "media": {
         "thumbnail": "/assets/projects/totem-thumb.jpg",
         "demoType": "video",
@@ -76,9 +76,9 @@
       "id": "hydroscan-waterflow",
       "title": "HydroScan — Lectura de Medidores de Agua",
       "category": "mobile",
-      "shortDescription": "App Flutter con QR + cámara + OCR para lectura automatizada de medidores de agua.",
-      "fullDescription": "Aplicación móvil MVP construida con Clean Architecture en Flutter. Flujo completo: escaneo de código QR del medidor → captura con cámara (overlay circular de guía) → reconocimiento óptico de caracteres (Google ML Kit) → validación y envío. Usa Riverpod para gestión de estado, Material 3 con tema oscuro de alto contraste para uso en terreno, y soporte para lectura de medidores manuales y digitales. Complementada con panel de administración en Angular 19 para gestión centralizada de lecturas y reportes.",
-      "techStack": ["Flutter", "Riverpod", "Google ML Kit OCR", "Angular", "REST API"],
+      "shortDescription": "App Android/iOS para lectura automática de medidores de agua con cámara y código QR.",
+      "fullDescription": "Aplicación móvil para equipos en terreno que automatiza la lectura de medidores de agua. El operador escanea el código QR del medidor, apunta la cámara al display y la app lee automáticamente el consumo mediante reconocimiento óptico. Funciona con medidores analógicos y digitales, incluso en condiciones de baja luz. Incluye panel web para supervisores con reportes de lectura, rutas asignadas y seguimiento del equipo en tiempo real.",
+      "techStack": ["Android", "iOS", "Lectura Automática", "Panel Web"],
       "media": {
         "thumbnail": "/assets/projects/hydroscan-thumb.jpg",
         "demoType": "video",
@@ -94,11 +94,47 @@
       "id": "catalogo-digital",
       "title": "Catálogo Digital Interactivo",
       "category": "web",
-      "shortDescription": "Plataforma web de catálogo con admin y display para pantallas comerciales.",
-      "fullDescription": "Sistema de catálogo digital con panel de administración para gestionar productos, categorías y precios. Incluye vista de display optimizada para pantallas comerciales y tótems, con actualización en tiempo real via Firebase. Diseñado para entornos retail donde los precios y productos cambian frecuentemente sin intervención técnica.",
-      "techStack": ["Angular", "Firebase", "TypeScript", "SCSS"],
+      "shortDescription": "Catálogo digital para pantallas comerciales con administración remota de productos y precios.",
+      "fullDescription": "Plataforma de catálogo digital diseñada para retail. Los productos, categorías y precios se gestionan desde un panel web y se actualizan instantáneamente en todas las pantallas y tótems conectados. Ideal para tiendas, supermercados y ferias donde los precios cambian frecuentemente. No requiere intervención técnica: cualquier persona del equipo puede actualizar el contenido desde su celular o computador.",
+      "techStack": ["Pantalla Comercial", "Actualización en Tiempo Real", "Panel Admin"],
       "media": {
         "thumbnail": "/assets/projects/catalogo-thumb.jpg",
+        "demoType": "iframe",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "nps-survey",
+      "title": "Encuesta NPS — Satisfacción del Cliente",
+      "category": "web",
+      "shortDescription": "Sistema de encuestas NPS para medir la satisfacción y lealtad de tus clientes en tiempo real.",
+      "fullDescription": "Plataforma de encuestas Net Promoter Score diseñada para medir la satisfacción del cliente de forma rápida y visual. El usuario califica su experiencia del 0 al 10, deja un comentario opcional y recibe feedback personalizado según su categoría (Detractor, Pasivo o Promotor). Ideal para puntos de venta, tótems de autoservicio y campañas post-venta. Los resultados se consolidan en un dashboard para el equipo de calidad.",
+      "techStack": ["Encuesta Interactiva", "Análisis NPS", "Dashboard"],
+      "media": {
+        "thumbnail": "/assets/projects/nps-thumb.jpg",
+        "demoType": "iframe",
+        "demoSource": "",
+        "gallery": []
+      },
+      "links": {
+        "live": null,
+        "github": null
+      }
+    },
+    {
+      "id": "catalogo-admin-dashboard",
+      "title": "Panel de Administración — Catálogo Digital",
+      "category": "web",
+      "shortDescription": "Dashboard administrativo con gestión de productos, reportes de ventas y control de inventario.",
+      "fullDescription": "Panel de administración completo para gestionar catálogos digitales. Incluye dashboard con métricas clave (productos, categorías, marcas, ventas), tabla de productos con búsqueda y filtros en tiempo real, y formulario de alta con validación. Diseñado para que cualquier persona del equipo pueda operar el sistema sin capacitación técnica. Interfaz moderna, responsiva y con experiencia de usuario profesional.",
+      "techStack": ["Dashboard", "Gestión de Productos", "Reportes"],
+      "media": {
+        "thumbnail": "/assets/projects/admin-thumb.jpg",
         "demoType": "iframe",
         "demoSource": "",
         "gallery": []
