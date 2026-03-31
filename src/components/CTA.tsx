@@ -37,7 +37,7 @@ export default function CTA() {
                 Escríbenos
               </a>
               <a
-                href="https://wa.me/56912345678"
+                href="https://wa.me/56936298799"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-card-border px-8 py-3.5 text-sm font-medium text-muted transition-colors hover:border-foreground/20 hover:text-foreground"

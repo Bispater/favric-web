@@ -2,7 +2,6 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import Process from "@/components/Process";
-import Testimonials from "@/components/Testimonials";
 import CTA from "@/components/CTA";
 
 // 🔑 Analogía Angular:
@@ -18,7 +17,6 @@ export default function Home() {
       <Services />
       <FeaturedProjects />
       <Process />
-      <Testimonials />
       <CTA />
     </>
   );
