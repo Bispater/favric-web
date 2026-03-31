@@ -24,6 +24,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2">
               <Link href="/" className="text-sm text-muted hover:text-foreground transition-colors">Inicio</Link>
               <Link href="/showroom" className="text-sm text-muted hover:text-foreground transition-colors">Showroom</Link>
+              <Link href="/games" className="text-sm text-muted hover:text-foreground transition-colors">Games</Link>
               <Link href="#servicios" className="text-sm text-muted hover:text-foreground transition-colors">Servicios</Link>
             </div>
           </div>
@@ -34,8 +35,8 @@ export default function Footer() {
               Contacto
             </h4>
             <div className="flex flex-col gap-2 text-sm text-muted">
-              <a href="mailto:contacto@favric.cl" className="hover:text-foreground transition-colors">
-                contacto@favric.cl
+              <a href="mailto:hola@favric.cl" className="hover:text-foreground transition-colors">
+                hola@favric.cl
               </a>
               <p>Santiago, Chile</p>
             </div>

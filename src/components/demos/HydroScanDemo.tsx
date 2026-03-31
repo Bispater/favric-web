@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Mini-demo replica of waterflow-scanner Flutter app
+// Mini-demo replica of waterflow-scanner mobile app
 // Flow: QR Scan → Prepare → Camera Capture → OCR Result → Confirm
 
 interface Measurement {

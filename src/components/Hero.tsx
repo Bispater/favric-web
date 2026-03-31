@@ -10,42 +10,130 @@ import { useEffect, useRef, useState } from "react";
 // - useRef = @ViewChild
 // - useState = variable de clase con change detection
 
-function FloatingParticles() {
-  const particles = Array.from({ length: 40 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    duration: Math.random() * 20 + 15,
-    delay: Math.random() * 5,
-  }));
+interface Node {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  opacity: number;
+  pulseSpeed: number;
+  pulseOffset: number;
+}
+
+function NetworkCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+    let nodes: Node[] = [];
+    const CONNECTION_DIST = 180;
+    const NODE_COUNT = 50;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas!.width = canvas!.offsetWidth * dpr;
+      canvas!.height = canvas!.offsetHeight * dpr;
+      ctx!.scale(dpr, dpr);
+    }
+
+    function initNodes() {
+      const w = canvas!.offsetWidth;
+      const h = canvas!.offsetHeight;
+      nodes = Array.from({ length: NODE_COUNT }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 1.8 + 0.8,
+        opacity: Math.random() * 0.5 + 0.3,
+        pulseSpeed: Math.random() * 0.02 + 0.005,
+        pulseOffset: Math.random() * Math.PI * 2,
+      }));
+    }
+
+    function draw(time: number) {
+      const w = canvas!.offsetWidth;
+      const h = canvas!.offsetHeight;
+      ctx!.clearRect(0, 0, w, h);
+
+      // Update positions
+      for (const node of nodes) {
+        node.x += node.vx;
+        node.y += node.vy;
+        if (node.x < 0 || node.x > w) node.vx *= -1;
+        if (node.y < 0 || node.y > h) node.vy *= -1;
+        node.x = Math.max(0, Math.min(w, node.x));
+        node.y = Math.max(0, Math.min(h, node.y));
+      }
+
+      // Draw connections
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECTION_DIST) {
+            const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
+            const pulse = Math.sin(time * 0.001 + i * 0.5) * 0.05 + 0.05;
+            ctx!.beginPath();
+            ctx!.moveTo(nodes[i].x, nodes[i].y);
+            ctx!.lineTo(nodes[j].x, nodes[j].y);
+            ctx!.strokeStyle = `rgba(139, 92, 246, ${alpha + pulse})`;
+            ctx!.lineWidth = 0.6;
+            ctx!.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      for (const node of nodes) {
+        const pulse = Math.sin(time * node.pulseSpeed + node.pulseOffset);
+        const r = node.radius + pulse * 0.5;
+        const alpha = node.opacity + pulse * 0.15;
+
+        // Glow
+        ctx!.beginPath();
+        ctx!.arc(node.x, node.y, r * 3, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(139, 92, 246, ${alpha * 0.1})`;
+        ctx!.fill();
+
+        // Core
+        ctx!.beginPath();
+        ctx!.arc(node.x, node.y, r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(196, 181, 253, ${alpha})`;
+        ctx!.fill();
+      }
+
+      animationId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    initNodes();
+    animationId = requestAnimationFrame(draw);
+
+    const handleResize = () => {
+      resize();
+      initNodes();
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full bg-white/20"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
-            opacity: [0, 0.6, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0 h-full w-full"
+    />
   );
 }
 
@@ -132,8 +220,8 @@ export default function Hero() {
         }}
       />
 
-      {/* Floating particles */}
-      <FloatingParticles />
+      {/* Animated network constellation */}
+      <NetworkCanvas />
 
       {/* Horizontal accent lines */}
       <motion.div
