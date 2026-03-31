@@ -26,7 +26,7 @@ const services = [
     ),
     title: "Aplicaciones Android e iOS",
     description:
-      "Apps nativas para Android e iOS: control remoto de dispositivos, lectura automática con cámara, escáner QR y sincronización en tiempo real.",
+      "Apps para Android e iOS: control remoto de dispositivos, lectura automática con cámara, escáner QR y sincronización en tiempo real.",
   },
   {
     icon: (

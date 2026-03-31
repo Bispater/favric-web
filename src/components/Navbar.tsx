@@ -14,8 +14,8 @@ const navLinks = [
   { href: "/", label: "Inicio" },
   { href: "/showroom", label: "Showroom" },
   { href: "/games", label: "Games" },
-  { href: "#servicios", label: "Servicios" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export default function Navbar() {
