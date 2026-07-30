@@ -28,7 +28,7 @@ export default function CTA() {
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
-                href="mailto:contacto@favric.cl"
+                href="mailto:hola@favric.cl"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] px-8 py-3.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-accent/25"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

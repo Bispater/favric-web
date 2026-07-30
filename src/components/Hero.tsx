@@ -30,13 +30,37 @@ function NetworkCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationId: number;
-    let nodes: Node[] = [];
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     const CONNECTION_DIST = 180;
-    const NODE_COUNT = 50;
+    const CONNECTION_DIST_SQ = CONNECTION_DIST * CONNECTION_DIST;
+    const ALPHA_BUCKETS = 8;
+    let animationId = 0;
+    let running = false;
+    let inView = true;
+    let nodes: Node[] = [];
+
+    // Un sprite pre-renderizado (glow + núcleo en un gradiente radial) se
+    // dibuja con drawImage: mucho más barato que 2 arc()+fill() por nodo.
+    const SPRITE = 64;
+    const sprite = document.createElement("canvas");
+    sprite.width = SPRITE;
+    sprite.height = SPRITE;
+    const sctx = sprite.getContext("2d")!;
+    const half = SPRITE / 2;
+    const grad = sctx.createRadialGradient(half, half, 0, half, half, half);
+    grad.addColorStop(0, "rgba(196, 181, 253, 1)");
+    grad.addColorStop(0.2, "rgba(196, 181, 253, 0.5)");
+    grad.addColorStop(0.45, "rgba(139, 92, 246, 0.12)");
+    grad.addColorStop(1, "rgba(139, 92, 246, 0)");
+    sctx.fillStyle = grad;
+    sctx.fillRect(0, 0, SPRITE, SPRITE);
 
     function resize() {
-      const dpr = window.devicePixelRatio || 1;
+      // Más de 1.5x de DPR no se nota en un fondo difuso y duplica el fill rate
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas!.width = canvas!.offsetWidth * dpr;
       canvas!.height = canvas!.offsetHeight * dpr;
       ctx!.scale(dpr, dpr);
@@ -45,7 +69,8 @@ function NetworkCanvas() {
     function initNodes() {
       const w = canvas!.offsetWidth;
       const h = canvas!.offsetHeight;
-      nodes = Array.from({ length: NODE_COUNT }, () => ({
+      const count = w < 640 ? 24 : w < 1024 ? 34 : 42;
+      nodes = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.4,
@@ -57,12 +82,11 @@ function NetworkCanvas() {
       }));
     }
 
-    function draw(time: number) {
+    function renderFrame(time: number) {
       const w = canvas!.offsetWidth;
       const h = canvas!.offsetHeight;
       ctx!.clearRect(0, 0, w, h);
 
-      // Update positions
       for (const node of nodes) {
         node.x += node.vx;
         node.y += node.vy;
@@ -72,59 +96,94 @@ function NetworkCanvas() {
         node.y = Math.max(0, Math.min(h, node.y));
       }
 
-      // Draw connections
+      // Conexiones agrupadas por nivel de alpha: ~8 stroke() por frame en
+      // lugar de uno por línea (que llegaban a ser cientos).
+      const buckets: (Path2D | null)[] = new Array(ALPHA_BUCKETS).fill(null);
+      const pulse = Math.sin(time * 0.001) * 0.05 + 0.05;
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < CONNECTION_DIST) {
-            const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
-            const pulse = Math.sin(time * 0.001 + i * 0.5) * 0.05 + 0.05;
-            ctx!.beginPath();
-            ctx!.moveTo(nodes[i].x, nodes[i].y);
-            ctx!.lineTo(nodes[j].x, nodes[j].y);
-            ctx!.strokeStyle = `rgba(139, 92, 246, ${alpha + pulse})`;
-            ctx!.lineWidth = 0.6;
-            ctx!.stroke();
+          const distSq = dx * dx + dy * dy;
+          if (distSq < CONNECTION_DIST_SQ) {
+            const t = 1 - Math.sqrt(distSq) / CONNECTION_DIST;
+            const b = Math.min(
+              ALPHA_BUCKETS - 1,
+              Math.floor(t * ALPHA_BUCKETS)
+            );
+            if (!buckets[b]) buckets[b] = new Path2D();
+            buckets[b]!.moveTo(nodes[i].x, nodes[i].y);
+            buckets[b]!.lineTo(nodes[j].x, nodes[j].y);
           }
         }
       }
-
-      // Draw nodes
-      for (const node of nodes) {
-        const pulse = Math.sin(time * node.pulseSpeed + node.pulseOffset);
-        const r = node.radius + pulse * 0.5;
-        const alpha = node.opacity + pulse * 0.15;
-
-        // Glow
-        ctx!.beginPath();
-        ctx!.arc(node.x, node.y, r * 3, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(139, 92, 246, ${alpha * 0.1})`;
-        ctx!.fill();
-
-        // Core
-        ctx!.beginPath();
-        ctx!.arc(node.x, node.y, r, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(196, 181, 253, ${alpha})`;
-        ctx!.fill();
+      ctx!.lineWidth = 0.6;
+      for (let b = 0; b < ALPHA_BUCKETS; b++) {
+        if (!buckets[b]) continue;
+        const alpha = ((b + 0.5) / ALPHA_BUCKETS) * 0.15 + pulse;
+        ctx!.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+        ctx!.stroke(buckets[b]!);
       }
 
-      animationId = requestAnimationFrame(draw);
+      for (const node of nodes) {
+        const p = Math.sin(time * node.pulseSpeed + node.pulseOffset);
+        const r = node.radius + p * 0.5;
+        const size = r * 6;
+        ctx!.globalAlpha = Math.max(0, node.opacity + p * 0.15);
+        ctx!.drawImage(sprite, node.x - size / 2, node.y - size / 2, size, size);
+      }
+      ctx!.globalAlpha = 1;
+    }
+
+    function loop(time: number) {
+      renderFrame(time);
+      animationId = requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running || reducedMotion) return;
+      running = true;
+      animationId = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(animationId);
     }
 
     resize();
     initNodes();
-    animationId = requestAnimationFrame(draw);
+    if (reducedMotion) {
+      renderFrame(0); // un solo frame estático
+    } else {
+      start();
+    }
+
+    // Pausar cuando el hero sale de pantalla o la pestaña queda oculta
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView && !document.hidden) start();
+      else stop();
+    });
+    io.observe(canvas);
+
+    const handleVisibility = () => {
+      if (!document.hidden && inView) start();
+      else stop();
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
 
     const handleResize = () => {
       resize();
       initNodes();
+      if (reducedMotion) renderFrame(0);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(animationId);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -170,33 +229,19 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
-      {/* Animated gradient orbs */}
+      {/* Animated gradient orbs — animados con CSS para que corran en el
+          compositor y la capa borrosa se rasterice una sola vez */}
       <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          className="absolute h-[500px] w-[500px] rounded-full bg-[var(--gradient-start)] opacity-20 blur-[128px]"
-          animate={{
-            x: ["-10%", "10%", "-10%"],
-            y: ["-5%", "15%", "-5%"],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          className="orb-drift-a absolute h-[500px] w-[500px] rounded-full bg-[var(--gradient-start)] opacity-20 blur-[128px]"
           style={{ left: "15%", top: "10%" }}
         />
-        <motion.div
-          className="absolute h-[400px] w-[400px] rounded-full bg-[var(--gradient-end)] opacity-15 blur-[128px]"
-          animate={{
-            x: ["10%", "-15%", "10%"],
-            y: ["10%", "-10%", "10%"],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          className="orb-drift-b absolute h-[400px] w-[400px] rounded-full bg-[var(--gradient-end)] opacity-15 blur-[128px]"
           style={{ right: "10%", bottom: "15%" }}
         />
-        <motion.div
-          className="absolute h-[300px] w-[300px] rounded-full bg-purple-500 opacity-10 blur-[100px]"
-          animate={{
-            x: ["5%", "-10%", "5%"],
-            y: ["-10%", "5%", "-10%"],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          className="orb-drift-c absolute h-[300px] w-[300px] rounded-full bg-purple-500 opacity-10 blur-[100px]"
           style={{ right: "30%", top: "20%" }}
         />
       </div>
@@ -224,14 +269,12 @@ export default function Hero() {
       <NetworkCanvas />
 
       {/* Horizontal accent lines */}
-      <motion.div
-        className="pointer-events-none absolute left-0 top-1/3 h-px w-full"
+      <div
+        className="accent-line-pulse pointer-events-none absolute left-0 top-1/3 h-px w-full"
         style={{
           background:
             "linear-gradient(90deg, transparent, rgba(109,40,217,0.15) 30%, rgba(6,182,212,0.15) 70%, transparent)",
         }}
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">

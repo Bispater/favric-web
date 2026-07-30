@@ -1,15 +1,42 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import portfolioData from "@/data/portfolio.json";
 import type { Project } from "@/lib/types";
-import ShowroomDemo from "@/components/demos/ShowroomDemo";
-import RutVerificationDemo from "@/components/demos/RutVerificationDemo";
-import ChickenMenuDemo from "@/components/demos/ChickenMenuDemo";
-import HydroScanDemo from "@/components/demos/HydroScanDemo";
-import NpsSurveyDemo from "@/components/demos/NpsSurveyDemo";
-import DashboardDemo from "@/components/demos/DashboardDemo";
+
+// Las demos solo se ven dentro del modal: se cargan bajo demanda para no
+// engordar el bundle inicial de la página.
+const demoLoading = () => (
+  <div className="flex h-40 items-center justify-center text-xs text-zinc-500">
+    Cargando demo…
+  </div>
+);
+const ShowroomDemo = dynamic(
+  () => import("@/components/demos/ShowroomDemo"),
+  { loading: demoLoading }
+);
+const RutVerificationDemo = dynamic(
+  () => import("@/components/demos/RutVerificationDemo"),
+  { loading: demoLoading }
+);
+const ChickenMenuDemo = dynamic(
+  () => import("@/components/demos/ChickenMenuDemo"),
+  { loading: demoLoading }
+);
+const HydroScanDemo = dynamic(
+  () => import("@/components/demos/HydroScanDemo"),
+  { loading: demoLoading }
+);
+const NpsSurveyDemo = dynamic(
+  () => import("@/components/demos/NpsSurveyDemo"),
+  { loading: demoLoading }
+);
+const DashboardDemo = dynamic(
+  () => import("@/components/demos/DashboardDemo"),
+  { loading: demoLoading }
+);
 
 // 🔑 Analogía Angular:
 // - useState = variables de clase con ngModel / change detection

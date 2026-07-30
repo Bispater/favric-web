@@ -47,3 +47,46 @@ body {
 .glow {
   box-shadow: 0 0 60px -12px rgba(109, 40, 217, 0.3);
 }
+
+/* Orbes del hero: solo transform, corre en el compositor (GPU) */
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate3d(-10%, -5%, 0); }
+  50% { transform: translate3d(10%, 15%, 0); }
+}
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate3d(10%, 10%, 0); }
+  50% { transform: translate3d(-15%, -10%, 0); }
+}
+@keyframes orb-drift-c {
+  0%, 100% { transform: translate3d(5%, -10%, 0); }
+  50% { transform: translate3d(-10%, 5%, 0); }
+}
+@keyframes accent-line-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.orb-drift-a {
+  animation: orb-drift-a 20s ease-in-out infinite;
+  will-change: transform;
+}
+.orb-drift-b {
+  animation: orb-drift-b 25s ease-in-out infinite;
+  will-change: transform;
+}
+.orb-drift-c {
+  animation: orb-drift-c 18s ease-in-out infinite;
+  will-change: transform;
+}
+.accent-line-pulse {
+  animation: accent-line-pulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-drift-a,
+  .orb-drift-b,
+  .orb-drift-c,
+  .accent-line-pulse {
+    animation: none;
+  }
+}
